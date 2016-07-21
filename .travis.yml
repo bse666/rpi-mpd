@@ -1,0 +1,21 @@
+services:
+  - docker
+
+before_script:
+
+  - sudo apt-get --yes --no-install-recommends install binfmt-support qemu-user-static
+  - echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:' | sudo tee -a /proc/sys/fs/binfmt_misc/register
+
+script:
+  - docker build -t bse666/rpi-mpd .
+  - docker run --name mpd -d bse666/rpi-mpd
+  - docker ps -a
+  
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push bse666/rpi-mpd;
+    fi
+
+notifications:
+  email: false
