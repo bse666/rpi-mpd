@@ -1,12 +1,11 @@
-# alpine-mpd
+# rpi-mpd
 
-This is an image for my favorite music server application [MPD](https://www.musicpd.org/). Using alpine as Cthe operating system.
+This Image is based on [vitiman/alpine-mpd](https://github.com/vitiman/alpine-mpd).
 
-This image is configured to use with Icecast as streaming output. You can edit the mpd.conf or use the fully audio stack I created. Check below about docker-music-stack.
-
-Check [alpine-mpd](https://hub.docker.com/r/vitiman/alpine-mpd/), [alpine-icecast](https://hub.docker.com/r/vitiman/alpine-icecast/), [alpine-sima](https://hub.docker.com/r/vitiman/alpine-sima/) and [alpine-ympd](https://hub.docker.com/r/vitiman/alpine-ympd/).
+This is a minimal mpd Image for a docker Music Server Application for the Raspberry pi
 
 # How to use 
+
 
 You can create volumes for your music, playlists and/or database, or use host volumes instead, you need to replace `your_SOMETHING_volume` with your host path or own volume.
 
@@ -14,7 +13,7 @@ You can create volumes for your music, playlists and/or database, or use host vo
         -v your_music_volume:/var/lib/mpd/music \
         -v your_playlists_volume:/var/lib/mpd/playlists \
         -v your_database_volume:/var/lib/mpd/database \
-        --name mpd vitiman/alpine-mpd:latest
+        --name mpd bse666/rpi-mpd:latest
 
 
 An instance of mpd is now running with the port 6600 mapped to your host or docker-machine IP address.
@@ -27,13 +26,12 @@ The passwords in the current configuration are just for testing purposes.
 
 # Docker-music-stack
 
-I've made a group of images for a full music-stack fully working.
+Based on VitiMan's Music Stack i built a [this](https://github.com/bse666/rpi-music-stack).
+It consists of:
 
 - [mpd](http://mpd.wikia.com/wiki/Music_Player_Daemon_Wiki) My favorite music server application
 - [icecast](http://icecast.org/): To stream the audio over the world
 - [sima](http://kaliko.me/code/mpd-sima/): Autoqueue client. Never stop listen!
 - [ympd](https://www.ympd.org/): A minimal Web GUI.
-
-Check the [Github repository](https://github.com/VITIMan/docker-music-stack) or the rest of images in Docker Hub. There is a docker-compose to setup everything.
 
 Enjoy!
