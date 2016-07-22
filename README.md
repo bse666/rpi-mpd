@@ -1,4 +1,4 @@
-# rpi-mpd
+# rpi-mpd [![Build Status](https://travis-ci.org/bse666/rpi-mpd.svg?branch=master)](https://travis-ci.org/bse666/rpi-mpd)
 
 This Image is based on [vitiman/alpine-mpd](https://github.com/vitiman/alpine-mpd).
 
