@@ -5,13 +5,13 @@ ENV MPC_VERSION 0.27-r0
 
 # travis does not like this
 # https://docs.docker.com/engine/reference/builder/#arg
-#ARG user=mpd
-#ARG group=audio
+ARG user=mpd
+ARG group=audio
 
 RUN apk -q update \
     && apk -q --no-progress add mpd \
     && apk -q --no-progress add mpc \
-#    && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
