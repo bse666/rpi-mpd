@@ -5,17 +5,17 @@ ENV MPC_VERSION 0.27-r0
 ENV user mpd
 ENV group audio
 
-RUN apk -q update \
-    && apk -q --no-progress add mpd \
-    && apk -q --no-progress add mpc \
-#    && rm -rf /var/cache/apk/*
+RUN apk -q update && \
+    apk add mpd && \
+    apk add mpc && \
+    rm -rf /var/cache/apk/*
 
-RUN mkdir -p /var/lib/mpd/music \
-    && mkdir -p /var/lib/mpd/playlists \
-    && mkdir -p /var/lib/mpd/database \
-    && mkdir -p /var/log/mpd/mpd.log \
-    && chown -R $user:$group /var/lib/mpd \
-    && chown -R $user:$group /var/log/mpd/mpd.log
+RUN mkdir -p /var/lib/mpd/music && \
+    mkdir -p /var/lib/mpd/playlists && \
+    mkdir -p /var/lib/mpd/database && \
+    mkdir -p /var/log/mpd/mpd.log && \
+    chown -R $user:$group /var/lib/mpd && \
+    chown -R $user:$group /var/log/mpd/mpd.log
 
 # Declare a music , playlists and database volume (state, tag_cache and sticker.sql)
 VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
