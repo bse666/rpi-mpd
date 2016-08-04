@@ -8,7 +8,7 @@ ENV group audio
 RUN apk -q update \
     && apk -q --no-progress add mpd \
     && apk -q --no-progress add mpc \
-    && rm -rf /var/cache/apk/*
+#    && rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
