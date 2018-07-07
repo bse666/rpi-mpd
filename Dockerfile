@@ -5,13 +5,13 @@ FROM hypriot/rpi-alpine-scratch
 
 # travis does not like this
 # https://docs.docker.com/engine/reference/builder/#arg
-#ARG user=mpd
-#ARG group=audio
+ARG mpduser=mpd
+ARG mpdgroup=audio
 
-RUN apk -q update \
-    && apk -q --no-progress add mpd \
-    && apk -q --no-progress add mpc \
-    && rm -rf /var/cache/apk/*
+RUN apk -q update
+RUN apk -q --no-progress add mpd
+RUN apk -q --no-progress add mpc
+RUN rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
