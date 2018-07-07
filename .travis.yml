@@ -7,7 +7,7 @@ script:
 # prepare qemu
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 # build image
-- docker build -t bse666/rpi-mpd .
+- docker build --no-cache -t bse666/rpi-mpd .
 - docker run --name mpd -d bse666/rpi-mpd
 - docker ps -a
 # push image
