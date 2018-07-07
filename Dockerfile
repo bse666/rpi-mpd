@@ -8,9 +8,9 @@ FROM hypriot/rpi-alpine-scratch
 ARG mpduser=mpd
 ARG mpdgroup=audio
 
-RUN apk -q update
-RUN apk -q --no-progress add mpd
-RUN apk -q --no-progress add mpc
+RUN apk update
+RUN apk add mpd
+RUN apk add mpc
 RUN rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/lib/mpd/music \
