@@ -1,20 +1,21 @@
+sudo: required
 services:
   - docker
-
-before_script:
-  - sudo apt-get --yes --no-install-recommends install binfmt-support qemu-user-static
-  - echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-arm-static:' | sudo tee -a /proc/sys/fs/binfmt_misc/register
-
-script:
-  - docker build -t bse666/rpi-mpd .
-  - docker run --name mpd -d bse666/rpi-mpd
-  - docker ps -a
   
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push bse666/rpi-mpd;
-    fi
-
-notifications:
-  email: false
+language: bash
+script:
+# prepare qemu
+- docker run --rm --privileged multiarch/qemu-user-static:register --reset
+# build image
+- docker build -t bse666/rpi-mpd .
+- docker run --name mpd -d bse666/rpi-mpd
+- docker ps -a
+# push image
+- >
+  if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    TAG=$(grep "ENV MYSQL_VERSION" Dockerfile | awk 'NF>1{print $NF}')
+    docker tag bse666/rpi-mpd bse666/rpi-mpd:$TAG
+    docker push bse666/rpi-mpd:$TAG
+    docker push bse666/rpi-mpd
+  fi
