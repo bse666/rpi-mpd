@@ -1,4 +1,4 @@
-FROM hypriot/rpi-alpine-scratch
+FROM alpine
 
 ENV MPD_VERSION 0.19.12-r0
 ENV MPC_VERSION 0.27-r0
